@@ -46,14 +46,31 @@ let baseMaps = {
     Satellite: satelliteStreets,
 };
 
+
+// Create the earthquake layer for our map.
+let earthquakes = new L.layerGroup();
+
 let map = L.map('mapid', {
     center: [30, 30],
     zoom: 2,
-    layers: [streets]
+    layers: [streets, earthquakes]
 })
 
+
+
+
+
+// We define an object that contains the overlays.
+// This overlay will be visible all the time.
+let overlays = {
+    Earthquakes: earthquakes
+};
+
 // Pass our map layers into our layers control and add the layers control to the map.
-L.control.layers(baseMaps).addTo(map);
+L.control.layers(baseMaps, overlays, {
+    collapsed: false
+}
+).addTo(map);
 
 // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
@@ -170,13 +187,13 @@ let earthquakeData = https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/a
             },
             // We set the style for each circleMarker using our styleInfo function.
             style: styleInfo,
-            
+
             // We create a popup for each circleMarker to display the magnitude and
             //  location of the earthquake after the marker has been created and styled.
             onEachFeature: function (feature, layer) {
                 layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
             }
-        }).addTo(map);
+        }).addTo(earthquakes);
         // no data beyond this point
     });
 
