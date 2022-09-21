@@ -42,8 +42,8 @@ let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tile
 // Create a base layer that holds both maps.
 let baseMaps = {
     Street: streets,
+    Dark: dark
     Satellite: satelliteStreets,
-    Dark: dark,
 };
 
 
@@ -59,7 +59,7 @@ let majorEarthquakes = new L.LayerGroup();
 let map = L.map('mapid', {
     center: [30, 30],
     zoom: 2,
-    layers: [streets, earthquakes, majorEarthquakes]
+    layers: [streets, earthquakes]
 })
 
 
